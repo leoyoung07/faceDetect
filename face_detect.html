@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>File Upload</title>
+		<meta charset="gb2312">
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<style type='text/css'>
+			body {
+			  background-color: #CCC;
+			}
+			#content {
+			  background-color: #FFF;
+			  border-radius: 5px;
+			}
+			#content .main {
+			  padding: 20px;
+			}
+			#content .sidebar {
+			  padding: 10px;
+			}
+			#content p {
+			  line-height: 30px;
+			}
+
+		</style>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</head>
+<body>
+<div class="container-fluid">
+<div class="row-fluid">
+	<h1 class="lead">文件上传</h1>
+	<div class="span10 offset1">
+	<form action="fileUpload.php" method="post" enctype="multipart/form-data">
+	<span>选择文件:</span>
+	<input type="file" name="file" id="file">
+	<br>
+	<button type="submit" name="submit" id="submit" class="btn-success"><span class="icon-ok"></span>上传</button>
+	</form>
+	</div>
+</div>
+</div>
+</body>
+</html>

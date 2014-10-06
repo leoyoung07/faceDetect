@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>
+write log
+</title>
+<script>
+function setTime()
+{
+	var time = document.getElementById("time");
+	time.value = Date();
+}
+</script>
+</head>
+<body>
+<form method="post" action="write_log.php">
+<input name="time" id="time" type="hidden">
+<label>修改</label><br>
+<textarea name="update">无</textarea><br>
+<label>新增</label><br>
+<textarea name="new">无</textarea><br>
+<input name="submit" type="submit" value="写好了" onclick="setTime();">
+</form>
+</body>
+</html>

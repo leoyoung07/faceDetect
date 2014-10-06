@@ -1,0 +1,92 @@
+时间:Wed Sep 17 2014 19:52:11 GMT+0800 (中国标准时间)
+修改:数据库表结构：
+ show tables;
++--------------------+
+| Tables_in_pictures |
++--------------------+
+| face               |
+| face_info          |
+| left_eye           |
+| mouth              |
+| nose               |
+| pic_info           |
+| right_eye          |
+| user_info          |
++--------------------+
+face  | CREATE TABLE `face` (
+  `dir` varchar(255) DEFAULT NULL,
+  `x` varchar(255) DEFAULT NULL,
+  `y` varchar(255) DEFAULT NULL,
+  `w` varchar(255) DEFAULT NULL,
+  `h` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1
+left_eye | CREATE TABLE `left_eye` (
+  `dir` varchar(255) DEFAULT NULL,
+  `x` varchar(255) DEFAULT NULL,
+  `y` varchar(255) DEFAULT NULL,
+  `w` varchar(255) DEFAULT NULL,
+  `h` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1
+
+新增:无
+
+
+时间:Wed Sep 17 2014 19:48:40 GMT+0800 (中国标准时间)
+修改:insert.php:
+改进人脸信息存入数据库的方式，将五官位置分开存放，使检测到的所有数据都能存入数据库
+新增:无
+
+
+时间:Tue Sep 02 2014 16:30:03 GMT+0800 (中国标准时间)
+修改:fileUpload.php:上传图片时，采用时间戳+随机数重命名，防止非法文件名。
+新增:display.php:显示图片处理结果
+
+
+时间:Mon Sep 01 2014 12:56:50 GMT+0800 (中国标准时间)
+修改:insert.php:将检测不到的项目值设为-1
+新增:gray.php:将彩色图片转为灰度图片，以提高人脸识别能力
+
+
+时间:Mon Aug 18 2014 18:23:47 GMT+0800 (CST)
+修改:无
+新增:face_info表结构:
+ face_info | CREATE TABLE `face_info` (
+  `dir` varchar(255) DEFAULT NULL,
+  `fx` varchar(255) DEFAULT NULL,
+  `fy` varchar(255) DEFAULT NULL,
+  `fw` varchar(255) DEFAULT NULL,
+  `fh` varchar(255) DEFAULT NULL,
+  `leyex` varchar(255) DEFAULT NULL,
+  `leyey` varchar(255) DEFAULT NULL,
+  `leyew` varchar(255) DEFAULT NULL,
+  `leyeh` varchar(255) DEFAULT NULL,
+  `reyex` varchar(255) DEFAULT NULL,
+  `reyey` varchar(255) DEFAULT NULL,
+  `reyew` varchar(255) DEFAULT NULL,
+  `reyeh` varchar(255) DEFAULT NULL,
+  `nosex` varchar(255) DEFAULT NULL,
+  `nosey` varchar(255) DEFAULT NULL,
+  `nosew` varchar(255) DEFAULT NULL,
+  `noseh` varchar(255) DEFAULT NULL,
+  `learx` varchar(255) DEFAULT NULL,
+  `leary` varchar(255) DEFAULT NULL,
+  `learw` varchar(255) DEFAULT NULL,
+  `learh` varchar(255) DEFAULT NULL,
+  `rearx` varchar(255) DEFAULT NULL,
+  `reary` varchar(255) DEFAULT NULL,
+  `rearw` varchar(255) DEFAULT NULL,
+  `rearh` varchar(255) DEFAULT NULL,
+  `mouthx` varchar(255) DEFAULT NULL,
+  `mouthy` varchar(255) DEFAULT NULL,
+  `mouthw` varchar(255) DEFAULT NULL,
+  `mouthh` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1
+
+
+时间:Mon Aug 18 2014 18:15:59 GMT+0800 (CST)
+修改:无
+新增:write_log.html
+write_log.php
+可以在网页中写更新日志
+
+
