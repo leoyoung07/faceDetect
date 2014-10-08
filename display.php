@@ -1,38 +1,17 @@
 <?php
-//$file = "img/Taylor/3.jpg";//原文件
-//$face_xml = "./xml/haarcascade_lefteye_2splits.xml";//XML文件
-
-function face_compare($row){
-	$image = imagecreatefromjpeg ($row[0]);//创建文件
-	$backgroundcolor = ImageColorAllocate($image, 255, 0, 0);//矩形颜色
-	//绘制矩形
-for($x=1;$x<=count($row)-4;$x+=4)
+/*
+$sql = "select dir,fx,fy,fw,fh,leyex,leyey,leyew,leyeh,reyex,reyey,reyew,reyeh,nosex,nosey,nosew,noseh,mouthx,mouthy,mouthw,mouthh from face_info;";
+$result = mysql_query($sql,$connect);
+while($row = mysql_fetch_row($result))
 {
-//	$dr = face_detect($file, $face_xml);//返回矩形参数x,y,w,h
-//	if ($dr)
-//	{
-//		foreach ($dr as $dr1)
-//		{
-	$x;
-	$y = $x+1;
-	$w = $x+2;
-	$h = $x+3;
-			imagerectangle($image,$row[$x],$row[$y],
-			$row[$x]+$row[$w],$row[$y]+$row[$h],
-			$backgroundcolor);
-//		}
-//	}
+//	print_r($row);
+
+	$newfile = face_compare($row);
+	echo "<img src=\"{$newfile}\">"."<br>";//输出文件
 }
-//	$time=time();
-	$hash_name = sha1($row[0]);
-	if(file_exists("./analyze/")==false)
-	{
-		mkdir("./analyze/");
-	}
-	$newfile="./analyze/{$hash_name}.jpg";//新文件名
-	imagejpeg($image,$newfile);//生成新文件
-	return $newfile; 
-}
+*/
+$file_to_display = $_POST["file_to_display"];
+echo "<img src=\"{$file_to_display}\">"."<br>";//输出文件
 ?>
 
 
