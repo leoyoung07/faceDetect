@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-<head><meta charset=\"gb2312\"></head>
+<head><meta charset="gb2312"></head>
 <body>
 <?php
 //file upload
