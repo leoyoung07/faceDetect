@@ -1,7 +1,7 @@
 <?php
 // return a serial to compare
 
-
+/*
 //$file = "img/Taylor/3.jpg";//原文件
 //$face_xml = "./xml/haarcascade_lefteye_2splits.xml";//XML文件
 
@@ -37,13 +37,35 @@ for($x=1;$x<=count($row)-4;$x+=4)
 	return $newfile; 
 }
 
-function face_serial()
+*/
+include_once "xml.php";
+function face_serial($face_info,$features_info)
 {
 	$serial = 123;
 
-	echo "serial: ".$serial;
+	//echo "serial: ".$serial;
 	
 	return $serial;
 }
 
+$serials = array();
+
+$face_info = face_detect($grayimg, $xml[0]);
+
+for($i=1,$n=0;$i<count($xml);$i++)
+{
+	
+	$features_info = face_detect($grayimg, $xml[$i]);
+	for ($j = 0; $j < count($face_info); $j++)
+	{
+		for ($k = 0; $k < count($features_info); $k++)
+		{
+			
+			$serials[$n] = face_serial($face_info[$j],$features_info[$k]);
+			$n++;
+		}
+
+	}
+
+}
 ?>

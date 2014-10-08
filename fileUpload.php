@@ -25,12 +25,17 @@ if($check_file)
 		echo $file["name"]." is uploaded <br> size: ".(int)($file["size"]/1024)."kb";
 		echo "<br>";
 		
-		sleep(3);
 
-		include "analyze.php";
+		
+//		sleep(3);
+
+//		include "analyze.php";
 
 //test codes
 /*
+		include_once "gray.php";
+		$grayimg = 'gray/'.sha1($file_dir).'.jpg';
+		grayjpg($file_dir, $grayimg);
 		include "test.php";
 		include_once "xml.php";
 		$locs = array(' F',' LE',' Re',' N',' M');
@@ -51,15 +56,15 @@ else
 	echo "invalid file!";
 }
 
-/*
+
 echo <<<EOT
 	<form action="analyze.php" method="post">
-	<input type="hidden" name="file" value="{$file_dir}">
+	<input type="hidden" name="file_dir" value="{$file_dir}">
 	<input type="submit" value="analyze">
 	</form>
 	
 EOT;
-*/
+
 ?>
 </body>
 </html>

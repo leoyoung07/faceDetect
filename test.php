@@ -14,11 +14,11 @@ echo	$backgroundcolor = ImageColorAllocate($image, 255, 0, 0);//矩形颜色
 	print_r($dr);
 		foreach ($dr as $dr1)
 		{
-			imagerectangle($image,$dr1[x],$dr1[y],
-			$dr1[x]+$dr1[w],$dr1[y]+$dr1[h],
+			imagerectangle($image,$dr1["x"],$dr1["y"],
+			$dr1["x"]+$dr1["w"],$dr1["y"]+$dr1["h"],
 			$backgroundcolor);
 
-			imagestring($image,3,$dr1[x],$dr1[y],$loc."_".$i,$backgroundcolor);
+			imagestring($image,3,$dr1["x"],$dr1["y"],$loc."_".$i,$backgroundcolor);
 			$i++;
 		}
 //	}

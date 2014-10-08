@@ -11,7 +11,6 @@ while($row = mysql_fetch_row($result))
 }
 */
 $file_to_display = $_POST["file_to_display"];
-echo "<img src=\"{$file_to_display}\">"."<br>";//输出文件
+echo $file_to_display;//输出文件
 ?>
-
 
