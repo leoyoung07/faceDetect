@@ -32,7 +32,7 @@ if($check_file)
 //		include "analyze.php";
 
 //test codes
-/*
+
 		include_once "gray.php";
 		$grayimg = 'gray/'.sha1($file_dir).'.jpg';
 		grayjpg($file_dir, $grayimg);
@@ -47,7 +47,7 @@ if($check_file)
 EOT;
 		}
 		
-*/
+
 //test codes
 	}
 }
