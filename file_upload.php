@@ -22,17 +22,20 @@ if($check_file)
 		$file_dir = "./upload/".time().rand().".jpg";
 		move_uploaded_file($file["tmp_name"],$file_dir);
 
-		echo $file["name"]." is uploaded <br> size: ".(int)($file["size"]/1024)."kb";
-		echo "<br>";
+//		echo $file["name"]." is uploaded <br> size: ".(int)($file["size"]/1024)."kb";
+//		echo "<br>";
 		
-
 		
-//		sleep(3);
-
-//		include "analyze.php";
+		$size = (int)($file["size"]/1024);
+		echo <<<EOT
+		<script>
+		alert("{$file["name"]} is uploaded \\n size: {$size} kb");
+		</script>
+EOT;
+		include "analyze.php";
 
 //test codes
-
+/*
 		include_once "gray.php";
 		$grayimg = 'gray/'.sha1($file_dir).'.jpg';
 		grayjpg($file_dir, $grayimg);
@@ -43,11 +46,17 @@ if($check_file)
 		{
 			$newfile = face_compare($grayimg,$xml[$key],$loc);
 			echo <<<EOT
-				<img src="{$newfile}">
+				<img src="{$newfile}"><br>
 EOT;
-		}
-		
 
+		}
+		echo <<<EOT
+			<form action="analyze.php" method="post">
+			<input type="hidden" name="file_dir" value="{$file_dir}">
+			<input type="submit" value="analyze">
+			</form>
+EOT;
+*/
 //test codes
 	}
 }
@@ -57,13 +66,7 @@ else
 }
 
 
-echo <<<EOT
-	<form action="analyze.php" method="post">
-	<input type="hidden" name="file_dir" value="{$file_dir}">
-	<input type="submit" value="analyze">
-	</form>
-	
-EOT;
+
 
 ?>
 </body>

@@ -2,13 +2,12 @@
 include_once "connect.php";
 //include "xml.php";
 include_once "gray.php";
-$file_dir = $_POST["file_dir"];
 
 
+//$file_dir = $_POST["file_dir"];
 
 
-
-$grayimg = 'gray/'.sha1($file_dir).'.jpg';
+$grayimg = "gray/gray-".basename($file_dir);
 grayjpg($file_dir, $grayimg);
 
 /*
