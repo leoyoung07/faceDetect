@@ -1,6 +1,5 @@
 
 <?php
-<<<<<<< HEAD
 include_once "get_distance.php";
 //file upload
 $longitude = "";
@@ -72,17 +71,3 @@ else
 
 
 ?>
-=======
-//echo "test code: ".$_POST["test"]."\n";
-//echo "test file: ".$_FILES["file"];
-//var_dump($_REQUEST);
-$string_img = $_POST["file"];
-$file_name = $_POST["file_name"];
-$img = imagecreatefromstring($string_img);
-imagejpeg($img,$file_name);
-// echo <<<EOT
-	// <img src="1.jpg">
-// EOT;
-echo $file_name." is uploaded.";
-?>
->>>>>>> 58e4b4dfbed74b835472a823d5a940dcf53371c4
