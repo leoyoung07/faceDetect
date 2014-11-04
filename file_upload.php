@@ -4,6 +4,13 @@
 <body>
 <?php
 //file upload
+$longitude = "";
+$latitude = "";
+//$web_page = 0;
+
+$longitude = $_POST["longitude"];
+$latitude = $_POST["latitude"];
+
 $file=$_FILES["file"];
 $check_file = ($file["type"]=="image/jpeg"||$file["type"]=="image/png"||$file["type"]=="image/bmp"||$file["type"]=="image/pjpeg")&&($file["size"]<2000000);
 if($check_file)
@@ -21,17 +28,25 @@ if($check_file)
 
 		$file_dir = "./upload/".time().rand().".jpg";
 		move_uploaded_file($file["tmp_name"],$file_dir);
-
-//		echo $file["name"]." is uploaded <br> size: ".(int)($file["size"]/1024)."kb";
-//		echo "<br>";
 		
 		
 		$size = (int)($file["size"]/1024);
-		echo <<<EOT
-		<script>
-		alert("{$file["name"]} is uploaded \\n size: {$size} kb");
-		</script>
+		if ($web_page == 0)
+		{
+			echo $file["name"]." is uploaded \n size: ".(int)($file["size"]/1024)."kb\nlongitude:{$longitude}\nlatitude:{$latitude}";
+			
+		}
+		else
+		{
+			echo <<<EOT
+			<script>
+			alert("{$file["name"]} is uploaded \\n size: {$size} kb");
+			</script>
 EOT;
+			
+		}
+		
+
 		include "analyze.php";
 
 //test codes
