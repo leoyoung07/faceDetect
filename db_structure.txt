@@ -1,0 +1,45 @@
+| user  | CREATE TABLE `user` (
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
+  `tel` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 |
+
+| pic   | CREATE TABLE `pic` (
+  `user_id` int(11) DEFAULT NULL,
+  `dir` varchar(255) NOT NULL DEFAULT '',
+  `serial` varchar(255) DEFAULT NULL,
+  `timestamp` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`dir`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `pic_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 |
+
+| face  | CREATE TABLE `face` (
+  `face_x` int(11) DEFAULT NULL,
+  `face_y` int(11) DEFAULT NULL,
+  `face_w` int(11) DEFAULT NULL,
+  `face_h` int(11) DEFAULT NULL,
+  `right_eye_x` int(11) DEFAULT NULL,
+  `right_eye_y` int(11) DEFAULT NULL,
+  `right_eye_w` int(11) DEFAULT NULL,
+  `right_eye_h` int(11) DEFAULT NULL,
+  `left_eye_x` int(11) DEFAULT NULL,
+  `left_eye_y` int(11) DEFAULT NULL,
+  `left_eye_w` int(11) DEFAULT NULL,
+  `left_eye_h` int(11) DEFAULT NULL,
+  `nose_x` int(11) DEFAULT NULL,
+  `nose_y` int(11) DEFAULT NULL,
+  `nose_w` int(11) DEFAULT NULL,
+  `nose_h` int(11) DEFAULT NULL,
+  `mouth_x` int(11) DEFAULT NULL,
+  `mouth_y` int(11) DEFAULT NULL,
+  `mouth_w` int(11) DEFAULT NULL,
+  `mouth_h` int(11) DEFAULT NULL,
+  `pic_dir` varchar(255) DEFAULT NULL,
+  KEY `pic_dir` (`pic_dir`),
+  CONSTRAINT `face_ibfk_1` FOREIGN KEY (`pic_dir`) REFERENCES `pic` (`dir`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 |
