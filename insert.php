@@ -3,10 +3,6 @@
 include_once "connect.php";
 include_once "xml.php";
 
-
-
-
-
 /*
 $features = array("face","left_eye","right_eye","nose","mouth");
 $loc = array("x","y","w","h");
@@ -45,15 +41,6 @@ for($i=0,$n=0;$i<count($features);$i++)
 	}
 }
 */
-
-
-
-for ($i = 0; $i < count($serials); $i++)
-{
-	$sql = "insert into pic_info(dir,serial) values ({$file_dir},{$serials[$i]});";
-	mysql_query($sql,$connect);
-	
-}
 
 
 
