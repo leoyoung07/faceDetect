@@ -2,9 +2,9 @@
 <?php
 include_once "get_distance.php";
 include_once "connect.php";
-//file upload
 if(isset($_POST["action"]))
 {
+	//登陆注册
 	$action = $_POST["action"];
 	$id = $_POST["name"];
 	$pw = $_POST["pwd"];
@@ -49,17 +49,10 @@ if(isset($_POST["action"]))
 }
 else
 {
-	// $longitude = "";
-	// $latitude = "";
-
-	// $last_longitude = 121.52245;
-	// $last_latitude = 38.87985;
-
-	// $longitude = (double)$_POST["longitude"];
-	// $latitude = (double)$_POST["latitude"];
 
 	if(isset($_FILES["file"]))
 	{
+		//文件上传
 		$file=$_FILES["file"];
 		//$check_file = ($file["type"]=="image/jpeg"||$file["type"]=="image/png"||$file["type"]=="image/bmp"||$file["type"]=="image/pjpeg")&&($file["size"]<2000000);
 		$check_file= true;
@@ -84,32 +77,6 @@ else
 				//$distance = get_distance($last_longitude,$last_latitude,$longitude,$latitude) * 1000;
 				//echo $file["name"]." is uploaded \n size: ".(int)($file["size"]/1024)."kb\nlongitude:{$longitude}\nlatitude:{$latitude}\ndistance:{$distance}m";
 
-				//include "analyze.php";
-
-		//test codes
-		/*
-				include_once "gray.php";
-				$grayimg = 'gray/'.sha1($file_dir).'.jpg';
-				grayjpg($file_dir, $grayimg);
-				include "test.php";
-				include_once "xml.php";
-				$locs = array(' F',' LE',' Re',' N',' M');
-				foreach($locs as $key=>$loc)
-				{
-					$newfile = face_compare($grayimg,$xml[$key],$loc);
-					echo <<<EOT
-						<img src="{$newfile}"><br>
-		EOT;
-
-				}
-				echo <<<EOT
-					<form action="analyze.php" method="post">
-					<input type="hidden" name="file_dir" value="{$file_dir}">
-					<input type="submit" value="analyze">
-					</form>
-		EOT;
-		*/
-		//test codes
 			}
 		}
 		else
@@ -119,6 +86,7 @@ else
 	}
 	else
 	{
+		//经纬度测距
 		$longitude = "";
 		$latitude = "";
 

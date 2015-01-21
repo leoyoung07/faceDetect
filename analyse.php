@@ -11,6 +11,7 @@ if($type=="search")
 	include_once "face_class.php";
 	include_once "xml.php";
 	include_once "gray.php";
+	$loc = array("face","right_eye","left_eye","nose","mouth");
 	$grayimg = "gray/gray-".basename($file_dir);
 	grayjpg($file_dir, $grayimg);
 	$detect_result = array();
@@ -18,10 +19,20 @@ if($type=="search")
 	for($i=1;$i<count($xml);$i++)
 	{
 		
-		$detect_result[$i] = choose_max(selector($detect_result[0],face_detect($grayimg, $xml[$i])));
+		$detect_result[$i] = choose_max(selector($detect_result[0],face_detect($grayimg, $xml[$i]),$loc[$i]));
 	}
 	
-	include "test.php";
+	
+	var_dump($detect_result);
+	include_once "test.php";
+	foreach ($detect_result as $key => $value)
+	{
+		$test_pic = face_compare($grayimg,$value,$loc[$key]);
+		echo <<<EOT
+		<img src="{$test_pic}">
+EOT;
+		echo "<br>";
+	}
 	/*
 	echo <<<EOT
 		<img src="{$grayimg}">
@@ -54,20 +65,57 @@ function choose_max($features)
 	
 }
 
-function selector($face,$features)
+function selector($face,$features,$type)
 {
 	$temp = array();
 	for ($i = 0,$j = 0; $i < count($features); $i++)
 	{
+		//选出人脸范围内的五官
 		if ($features[$i]["x"]>=$face["x"]&&$features[$i]["y"]>=$face["y"]&&
-		($features[$i]["x"]+$features[$i]["w"])<=($face["x"]+$face["w"])&&
-		($features[$i]["y"]+$features[$i]["h"])<=($face["y"]+$face["h"]))
+		($features[$i]["x"])<=($face["x"]+$face["w"])&&
+		($features[$i]["y"])<=($face["y"]+$face["h"]))
 		{
-			$temp[$j] = $features[$i];
-			$j++;
+			//选出正确位置的右眼
+			if ($type=="right_eye")
+			{
+				if ($features[$i]["y"]<=($face["y"]+$face["y"]+$face["h"])/2&&
+				($features[$i]["x"]+$features[$i]["x"]+$features[$i]["w"])/2<=($face["x"]+$face["x"]+$face["w"])/2)
+				{
+					$temp[$j] = $features[$i];
+					$j++;
+				}
+			//选出正确位置的左眼
+			}else if ($type=="left_eye")
+			{
+				if ($features[$i]["y"]<=($face["y"]+$face["y"]+$face["h"])/2&&
+				($features[$i]["x"]+$features[$i]["x"]+$features[$i]["w"])/2>=($face["x"]+$face["x"]+$face["w"])/2)
+				{
+					$temp[$j] = $features[$i];
+					$j++;
+				}
+			//选出正确位置的嘴
+			}else if ($type=="mouth")
+			{
+				if ($features[$i]["y"]>=($face["y"]+$face["y"]+$face["h"])/2)
+				{
+					$temp[$j] = $features[$i];
+					$j++;			
+				}
+				
+			}else
+			{
+				$temp[$j] = $features[$i];
+				$j++;
+			}
+
 			
 		}
 			
+	}
+	if (count($temp)==0)
+	{
+		$temp[0] = array("x"=>-1,"y"=>-1,"w"=>-1,"h"=>-1);
+		
 	}
 	return $temp;
 }
