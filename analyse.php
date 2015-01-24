@@ -39,16 +39,28 @@ if($type=="search")
 		for ($i = 0; $i < count($features); $i++)
 		{
 			$temp_feature = array();
-			for ($j = 0; $j < ($loc); $j++)
+			for ($j = 0; $j < count($loc); $j++)
 			{
-				$temp_feature[$j] = $array[$features[$i]."_".$loc[$j]];
+				$temp_feature[$loc[$j]] = (int)$array[$features[$i]."_".$loc[$j]];
 				
 			}
 			$temp_result[$i] = $temp_feature;
 		}
-		var_dump($temp_result);
-		echo "<br>";
+		$face2 = new face($temp_result[0],$temp_result[1],$temp_result[2],$temp_result[3],$temp_result[4]);
+		$similarity = similarity($face1,$face2);
+		//0.985
+		echo <<<EOT
+		<br><img src="{$array["pic_dir"]}"><br>similarity: {$similarity}<br>
+EOT;
+		//var_dump($temp_result);
+		//echo "<br>";
 	}
+	echo "<br>";
+	echo "face1: ";
+	var_dump($face1);
+	echo "<br>";
+	echo "face2: ";
+	var_dump($face2);
 
 //test codes
 /*
