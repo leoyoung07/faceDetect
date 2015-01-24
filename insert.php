@@ -3,6 +3,53 @@
 include_once "connect.php";
 include_once "xml.php";
 
+$pic_columns = "user_id,dir,timestamp,location";
+$pic_values = "{$user_id},'{$file_dir}','{$timestamp}','{$location}'";
+$face_columns = "pic_dir";
+for ($i = 0; $i < count($features); $i++)
+{
+	for ($j = 0; $j < count($loc); $j++)
+	{
+		$face_columns.= ",{$features[$i]}_{$loc[$j]}";
+	}
+	
+}
+$face_values = "'{$file_dir}'";
+for ($i = 0; $i < count($detect_result); $i++)
+{
+	for ($j = 0; $j < count($loc); $j++)
+	{
+		$face_values.= ",{$detect_result[$i][$loc[$j]]}";
+	}
+	
+}
+$sql = array();
+$sql[0] = "insert into pic({$pic_columns}) values ({$pic_values});";
+$sql[1] = "insert into face({$face_columns}) values ({$face_values});";
+
+for ($i = 0; $i < count($sql); $i++)
+{
+	echo $sql[$i]."<br>";
+	
+}
+
+$connect = connect();
+for ($i = 0; $i < count($sql); $i++)
+{
+	$result = $connect->exec($sql[$i]);
+	if ($result==true)
+	{
+		echo "sql".$i." successed<br>";
+		
+	}	
+	else
+	{
+		echo "sql".$i." failed<br>";
+	}
+}
+
+
+
 /*
 $features = array("face","left_eye","right_eye","nose","mouth");
 $loc = array("x","y","w","h");

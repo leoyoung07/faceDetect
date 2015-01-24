@@ -5,6 +5,9 @@
 <?php
 //file upload
 
+session_start();
+$user_id = $_SESSION['user_id'];
+echo $user_id;
 
 $file=$_FILES["file"];
 $check_file = ($file["type"]=="image/jpeg"||$file["type"]=="image/png"||$file["type"]=="image/bmp"||$file["type"]=="image/pjpeg")&&($file["size"]<2000000);
@@ -23,7 +26,6 @@ if($check_file)
 		$timestamp = time();
 		$file_dir = "./upload/".$timestamp."-".rand().".jpg";
 		move_uploaded_file($file["tmp_name"],$file_dir);
-
 		include "analyse.php";
 
 //test codes

@@ -14,9 +14,9 @@ body{font-family:"ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvet
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <?php
 session_start();
-if(!isset($_SESSION['user']))
+if(!isset($_SESSION['user_id']))
 {
-	$_SESSION['user']='anonymous_user';
+	$_SESSION['user_id']=0;
 }
 ?>
 
