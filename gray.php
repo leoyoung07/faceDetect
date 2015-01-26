@@ -1,15 +1,20 @@
 <?php
-	function grayjpg($res,$grayimg)
+	function grayjpg($res,$grayimg,$face_x,$face_y,$face_w,$face_h)
 	{
+		// Load
 		$img = imagecreatefromjpeg($res);
-		$w = ImageSX($img);
-		$h = ImageSY($img);
+		$width = 200;
+		$height = 200;	
+		$thumb = imagecreatetruecolor($width,$height);
 
-		for($x=0;$x<$w;$x++)
+		// Resize
+		imagecopyresized($thumb, $img, 0, 0, $face_x, $face_y, $width, $height, $face_w, $face_h);
+
+		for($x=0;$x<$width;$x++)
 		{
-			for($y=0;$y<$h;$y++)
+			for($y=0;$y<$height;$y++)
 			{
-				$rgb = ImageColorAt($img,$x,$y);
+				$rgb = ImageColorAt($thumb,$x,$y);
 				$r = $rgb>>16 & 0xFF;
 				$g = $rgb>>8 & 0xFF;
 				$b = $rgb & 0xFF;
@@ -17,11 +22,12 @@
 				//printf("%x ",$avg);
 				$gray = ($avg<<16) + ($avg<<8) + $avg;
 				//printf("%06x ",$gray);
-				imagesetpixel($img, $x, $y, $gray);
+				imagesetpixel($thumb, $x, $y, $gray);
 			}
 		}
-
-		imagejpeg($img,$grayimg);
+		
+		imagejpeg($thumb,$grayimg);
+		imagedestroy($thumb);
 		imagedestroy($img);
 	}
 /*	

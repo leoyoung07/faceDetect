@@ -6,61 +6,46 @@ include_once "xml.php";
 include_once "gray.php";
 $features = array("face","right_eye","left_eye","nose","mouth");
 $loc = array("x","y","w","h");
-$grayimg = "gray/gray-".basename($file_dir);
-grayjpg($file_dir, $grayimg);
 $detect_result = array();
-$detect_result[0] = choose_max(face_detect($grayimg, $xml[0]));
+$detect_result[0] = choose_max(face_detect($file_dir, $xml[0]));
+$grayimg = "gray/gray-".basename($file_dir);
+grayjpg($file_dir, $grayimg,$detect_result[0]["x"],$detect_result[0]["y"], $detect_result[0]["w"],$detect_result[0]["h"]);
+/*
+echo <<<EOT
+	<br><img src="{$grayimg}"><br>
+EOT;
+
 for($i=1;$i<count($xml);$i++)
 {
 	
 	$detect_result[$i] = choose_max(selector($detect_result[0],face_detect($grayimg, $xml[$i]),$features[$i]));
 }
-
+*/
 
 $type = $_POST["type"];
 
 if($type=="search")
 {
 
-	$face1 = new face($detect_result[0],$detect_result[1],$detect_result[2],$detect_result[3],$detect_result[4]);
-	//var_dump($face1);
-	$sql = "select * from face;";
+	$face1 = new face($grayimg);
+	$sql = "select * from pic;";
 	$connect = connect();
 	$result = $connect->query($sql);
 	$result->setFetchMode(PDO::FETCH_ASSOC);
-	$pic_dir = array();
-	$i = 0;
+	
 	while ($array = $result->fetch())
 	{
-		//var_dump($array);
-		//echo "<br>";
-		
-		$temp_result = array();
-		for ($i = 0; $i < count($features); $i++)
-		{
-			$temp_feature = array();
-			for ($j = 0; $j < count($loc); $j++)
-			{
-				$temp_feature[$loc[$j]] = (int)$array[$features[$i]."_".$loc[$j]];
-				
-			}
-			$temp_result[$i] = $temp_feature;
-		}
-		$face2 = new face($temp_result[0],$temp_result[1],$temp_result[2],$temp_result[3],$temp_result[4]);
+		$dir = $array["dir"];
+		$face2 = new face("gray/gray-".basename($dir));
 		$similarity = similarity($face1,$face2);
-		//0.985
-		echo <<<EOT
-		<br><img src="{$array["pic_dir"]}"><br>similarity: {$similarity}<br>
+		unset($face2);
+		if($similarity>=0.9)
+		{
+			echo <<<EOT
+		<br><img src="{$dir}"><br>similarity: {$similarity}<br>
 EOT;
-		//var_dump($temp_result);
-		//echo "<br>";
+		}
 	}
-	echo "<br>";
-	echo "face1: ";
-	var_dump($face1);
-	echo "<br>";
-	echo "face2: ";
-	var_dump($face2);
 
 //test codes
 /*
@@ -76,7 +61,8 @@ EOT;
 	}
 
 */
-
+	unlink($grayimg);
+	unlink($file_dir);
 }
 else
 {

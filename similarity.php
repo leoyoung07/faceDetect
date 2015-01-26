@@ -1,5 +1,5 @@
 <?php
-// return a similarity to compare
+// return a similarity
 
 //include_once "xml.php";
 
