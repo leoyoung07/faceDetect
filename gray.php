@@ -18,7 +18,7 @@
 				$r = $rgb>>16 & 0xFF;
 				$g = $rgb>>8 & 0xFF;
 				$b = $rgb & 0xFF;
-				$avg = (int)(($r+$g+$b)/0x3);
+				$avg = (int)(0.299*$r+0.587*$g+0.114*$b);
 				//printf("%x ",$avg);
 				$gray = ($avg<<16) + ($avg<<8) + $avg;
 				//printf("%06x ",$gray);
