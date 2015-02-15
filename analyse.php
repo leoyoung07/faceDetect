@@ -1,3 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Find U</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/tile.css" rel="stylesheet">
+	<style>
+body{font-family:"ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;}
+
+	</style>
+</head>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+<?php
+session_start();
+if(!isset($_SESSION['user_id']))
+{
+	$_SESSION['user_id']=0;
+}
+?>
+
+
+
+<div class="container-fluid">
+	<div class="row-fluid">
+	
+	<?php
+	include "navbar.php";
+	include "head.php";
+	?>
+	
+
+	<!-- =========================	Search	========================= -->
+		<div class="text-center">
+			<fieldset>
+			<legend>图片搜索</legend>
+				<form class="form-inline" action="upload_handler.php" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="type" value="search">
+				<div class="">
+				<span class="">选择文件:</span>
+				<input class="" type="file" name="file" id="file">
+				<button type="submit" name="submit" id="submit" class="btn btn-primary">搜索</button>
+				</div>
+				</form>
+			</fieldset>
+		</div>
+				
+	<!-- =========================	Content	========================= -->	
+		<div class="">
+			<fieldset>
+			<legend>找找看</legend>
+
 <?php
 include_once "connect.php";
 include_once "similarity.php";
@@ -42,7 +95,7 @@ if($type=="search")
 		if($similarity>=0.9)
 		{
 			echo <<<EOT
-		<br><img src="{$dir}"><br>similarity: {$similarity}<br>
+		<a href="http://www.baidu.com"><div class="tile double double-vertical ol-cyan"><img src="{$dir}"><br>similarity: {$similarity}</div></a>
 EOT;
 		}
 	}
@@ -71,6 +124,8 @@ else
 	$location = $_POST["location"];
 	include_once "insert.php";
 }
+
+
 
 function choose_max($features)
 {
@@ -152,3 +207,25 @@ function selector($face,$features,$type)
 }
 
 ?>
+
+
+			</fieldset>
+		</div>
+		
+		
+		
+	</div>
+</div>
+    <script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/tile.js"></script>
+	<!--
+	<script>
+	$(document).ready(function()
+	{
+		$("#index_page").attr("class","active");
+	});
+	</script>
+	-->
+</body>
+</html>

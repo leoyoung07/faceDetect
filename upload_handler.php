@@ -1,7 +1,4 @@
-<!DOCTYPE HTML>
-<html>
-<head><meta charset="gb2312"></head>
-<body>
+
 <?php
 //file upload
 
@@ -63,5 +60,4 @@ else
 
 
 ?>
-</body>
-</html>
+

@@ -25,47 +25,13 @@ if(!isset($_SESSION['user_id']))
 <div class="container-fluid">
 	<div class="row-fluid">
 	
-	    <!-- =========================	Navbar	========================= -->
-		<div class="navbar navbar-inverse navbar-fixed-top">
-		  <div class="navbar-inner">
-			<div class="container-fluid">
-			  <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			  </button>
-			  <a class="brand" href="./index.php">Find U</a>
-			  <div class="nav-collapse collapse">
-				<ul class="nav text-center">
-				  <li class="active">
-					<a href="./index.php">首页</a>
-				  </li>
-				  <li class="">
-					<a href="./file_upload.php">上传</a>
-				  </li>
-				  <li class="">
-					<a href="./user_info.php">我的信息</a>
-				  </li>
-				  <li class="">
-					<a href="./sign.php">登录/注册</a>
-				  </li>
-				  <li class="">
-					<a href="./about.php">联系我们</a>
-				  </li>
-				</ul>
-			  </div>
-			</div>
-		  </div>
-		</div>
+	<?php
+	include "navbar.php";
+	include "head.php";
+	?>
 	
-	<!-- =========================	Head	========================= -->
-		<div>
-			<br>
-			<br>
-			<h1 class="text-center">Find U</h1>
-		</div>
-	
-	<!-- =========================	Search/Upload	========================= -->
+
+	<!-- =========================	Search	========================= -->
 		<div class="text-center">
 			<fieldset>
 			<legend>图片搜索</legend>
@@ -84,10 +50,10 @@ if(!isset($_SESSION['user_id']))
 		<div class="">
 			<fieldset>
 			<legend>找找看</legend>
-				<a href="http://www.baidu.com"><div class="tile double double-vertical bg-custom"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div></a>
-				<a href="http://www.baidu.com"><div class="tile bg-cyan"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div></a>
-				<a href="http://www.baidu.com"><div class="tile ol-cyan"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div></a>
-				<a href="http://www.baidu.com"><div class="tile"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div></a>
+				<a href="http://www.baidu.com"><div class="tile double double-vertical ol-cyan"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div></a>
+				<a href="http://www.baidu.com"><div class="tile double double-vertical ol-cyan"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div></a>
+				<a href="http://www.baidu.com"><div class="tile double double-vertical ol-cyan"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div></a>
+				<a href="http://www.baidu.com"><div class="tile double double-vertical ol-cyan"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div></a>
 			</fieldset>
 		</div>
 		
@@ -98,5 +64,11 @@ if(!isset($_SESSION['user_id']))
     <script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/tile.js"></script>
+	<script>
+	$(document).ready(function()
+	{
+		$("#index_page").attr("class","active");
+	});
+	</script>
 </body>
 </html>

@@ -3,8 +3,7 @@
 <head>
 	<title>Find U</title>
 	<meta charset="utf-8">
-    <script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<style>
 	*{margin:0;padding: 0;}
@@ -24,45 +23,11 @@ if(!isset($_SESSION['user']))
 }
 ?>
     <div class="container-fluid">
-	<!-- =========================	Navbar	========================= -->
-		<div class="navbar navbar-inverse navbar-fixed-top">
-		  <div class="navbar-inner">
-			<div class="container-fluid">
-			  <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			  </button>
-			  <a class="brand" href="./index.php">Find U</a>
-			  <div class="nav-collapse collapse">
-				<ul class="nav text-center">
-				  <li class="">
-					<a href="./index.php">首页</a>
-				  </li>
-				  <li class="">
-					<a href="./file_upload.php">上传</a>
-				  </li>
-				  <li class="">
-					<a href="./user_info.php">我的信息</a>
-				  </li>
-				  <li class="active">
-					<a href="./sign.php">登录/注册</a>
-				  </li>
-				  <li class="">
-					<a href="./about.php">联系我们</a>
-				  </li>
-				</ul>
-			  </div>
-			</div>
-		  </div>
-		</div>
-		
-	<!-- =========================	Head	========================= -->
-		<div>
-			<br>
-			<br>
-			<h1 class="text-center">Find U</h1>
-		</div>
+
+	<?php
+	include "navbar.php";
+	include "head.php";
+	?>
 	
 	<!-- =========================	LoginBox	========================= -->	
         <section class="loginBox row-fluid">
@@ -95,6 +60,14 @@ if(!isset($_SESSION['user']))
 		  </section>
         </section>
     </div>
+    <script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    <script>
+	$(document).ready(function()
+	{
+		$("#sign_page").attr("class","active");
+	});
+	</script>
   </body>
 </html>
 </html>
