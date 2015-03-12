@@ -1,3 +1,9 @@
+<?php
+session_start();
+
+$_SESSION['user_name']="findu_anonymous_user";
+
+?>
 <!doctype html>
 <html>
 <head>
@@ -5,6 +11,9 @@
 	<meta charset="utf-8">
 
 	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/bootstrap-responsive.css" rel="stylesheet">
+	
+	<link href="css/findu.css" rel="stylesheet">
 	<style>
 	*{margin:0;padding: 0;}
       body{background: #444}
@@ -15,19 +24,14 @@
 	</style>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
-<?php
-session_start();
-if(!isset($_SESSION['user']))
-{
-	$_SESSION['user']='anonymous_user';
-}
-?>
-    <div class="container-fluid">
 
 	<?php
 	include "navbar.php";
 	include "head.php";
 	?>
+    <div class="container-fluid">
+
+
 	
 	<!-- =========================	LoginBox	========================= -->	
         <section class="loginBox row-fluid">

@@ -8,7 +8,7 @@ $result = $connect->exec($sql);
 if($result == true)
 {
 	session_start();
-	$_SESSION['user']= $name;
+	$_SESSION['user_name']= $name;
 	header("Location:user_info.php");
 }
 else

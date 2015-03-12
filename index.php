@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['user_name']))
+{
+	$_SESSION['user_name']="findu_anonymous_user";
+}
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -5,30 +12,26 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/tile.css" rel="stylesheet">
+	<link href="css/findu.css" rel="stylesheet">
 	<style>
-body{font-family:"ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;}
+
 
 	</style>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
-<?php
-session_start();
-if(!isset($_SESSION['user_id']))
-{
-	$_SESSION['user_id']=0;
-}
-?>
 
 
-
-<div class="container-fluid">
-	<div class="row-fluid">
-	
 	<?php
 	include "navbar.php";
 	include "head.php";
 	?>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+	
+
 	
 
 	<!-- =========================	Search	========================= -->
@@ -50,10 +53,15 @@ if(!isset($_SESSION['user_id']))
 		<div class="">
 			<fieldset>
 			<legend>找找看</legend>
-				<a href="http://www.baidu.com"><div class="tile double double-vertical ol-cyan"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div></a>
-				<a href="http://www.baidu.com"><div class="tile double double-vertical ol-cyan"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div></a>
-				<a href="http://www.baidu.com"><div class="tile double double-vertical ol-cyan"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div></a>
-				<a href="http://www.baidu.com"><div class="tile double double-vertical ol-cyan"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div></a>
+				<a href="http://www.baidu.com" class="result_a">
+					<div class="tile custom">
+						<img src="img/Taylor/1.jpg" class="result_img">
+						<div class="result_info" style="background-color:#aaaaaa;position:absolute;left:0;top:0;display:none;">
+							123
+						</div>
+					</div>
+				</a>
+
 			</fieldset>
 		</div>
 		
@@ -68,6 +76,14 @@ if(!isset($_SESSION['user_id']))
 	$(document).ready(function()
 	{
 		$("#index_page").attr("class","active");
+		$(".result_a").mouseenter(function()
+		{
+			$(this).children().children(".result_info").css("display","inline");
+		});
+		$(".result_a").mouseleave(function()
+		{
+			$(this).children().children(".result_info").css("display","none");
+		});
 	});
 	</script>
 </body>

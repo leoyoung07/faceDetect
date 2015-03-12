@@ -14,11 +14,13 @@
     cursor: pointer; /* 默认鼠标移动上去时手型 */
     background-color: #eeeeee; /* 默认背景颜色是灰色 */
     box-shadow: inset 0px 0px 1px #FFFFCC; /* 设置少许的阴影 */
-	border-radius:8px
+	border-radius: 8px;
+	border: solid 3px;
+	border-color: #FFFFFF !important;
 }
 
     .tile:hover {
-        border: #999999 solid 3px; /* 鼠标移动时，设置轮廓颜色和边框 */
+        border-color: #1ba1e2 !important; /* 鼠标移动时，设置轮廓颜色和边框 */
     }
 
     .tile.active .tile:active {
@@ -64,7 +66,12 @@
     .tile.quadro-vertical {
         height: 510px;
     }
-
+	
+	/* 自定义大小 */
+	.tile.custom {
+	height:320px;
+	width:320px;
+	}
 
 .bg-black {
     background-color: #000000 !important;
@@ -1120,4 +1127,9 @@
 
 .ol-custom {
     border-color: #6d8764 !important;
+}
+
+.result_img {
+	width:320px;
+	height:320px
 }

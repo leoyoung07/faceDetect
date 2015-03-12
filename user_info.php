@@ -1,3 +1,15 @@
+<?php
+session_start();
+if(!isset($_SESSION['user_name'])||$_SESSION['user_name']=="findu_anonymous_user")
+{
+	echo <<<EOT
+	<meta http-equiv="refresh" content="0;url=sign.php">
+	<meta charset="utf-8">
+	<script>alert('请先登录')</script>
+EOT;
+exit();
+}
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -5,30 +17,25 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/tile.css" rel="stylesheet">
+	<link href="css/findu.css" rel="stylesheet">
 	<style>
-body{font-family:"ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;}
-
 	</style>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
-<?php
-session_start();
-if(!isset($_SESSION['user']))
-{
-	$_SESSION['user']='anonymous_user';
-}
-?>
 
 
 
-<div class="container-fluid">
-	<div class="row-fluid">
-	
 	<?php
 	include "navbar.php";
 	include "head.php";
 	?>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+	
+
 	
 
 	<!-- =========================	User Info	========================= -->	
@@ -43,7 +50,7 @@ if(!isset($_SESSION['user']))
 		<div class="text-center">
 			<fieldset>
 			<legend>图片搜索</legend>
-				<form class="form-inline" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
+				<form class="form-inline" action="<?php //echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
 				<div class="">
 				<span class="">选择文件:</span>
 				<input class="" type="file" name="file" id="file">

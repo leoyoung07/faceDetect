@@ -5,12 +5,13 @@ $name = $_POST["username"];
 $password = $_POST["password"];
 $sql = "select * from user where name='{$name}' and password='{$password}';";
 $result = $connect->query($sql);
-$result->setFetchMode(PDO::FETCH_NUM);
+$result->setFetchMode(PDO::FETCH_ASSOC);
 $array = $result->fetch();
 if($array)
 {	
+	$user_name = $array["name"];
 	session_start();
-	$_SESSION['user']= $name;
+	$_SESSION['user_name']= $user_name;
 	header("Location:index.php");
 }
 else
