@@ -4,55 +4,7 @@ if(!isset($_SESSION['user_name']))
 {
 	$_SESSION['user_name']="findu_anonymous_user";
 }
-?>
-<!DOCTYPE HTML>
-<html>
-<head>
-	<title>Find U</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="css/bootstrap.css" rel="stylesheet">
-	<link href="css/bootstrap-responsive.css" rel="stylesheet">
-	<link href="css/tile.css" rel="stylesheet">
-	<link href="css/findu.css" rel="stylesheet">
-	<style>
 
-
-	</style>
-</head>
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-
-
-	<?php
-	include "navbar.php";
-	include "head.php";
-	?>
-
-<div class="container-fluid">
-	<div class="row-fluid">
-	
-
-	<!-- =========================	Search	========================= -->
-		<div class="text-center">
-			<fieldset>
-			<legend>图片搜索</legend>
-				<form class="form-inline" action="upload_handler.php" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="type" value="search">
-				<div class="">
-				<span class="">选择文件:</span>
-				<input class="" type="file" name="file" id="file">
-				<button type="submit" name="submit" id="submit" class="btn btn-primary">搜索</button>
-				</div>
-				</form>
-			</fieldset>
-		</div>
-				
-	<!-- =========================	Content	========================= -->	
-		<div class="">
-			<fieldset>
-			<legend>找找看</legend>
-
-<?php
 include_once "connect.php";
 include_once "similarity.php";
 include_once "face_class.php";
@@ -86,7 +38,7 @@ if($type=="search")
 	$connect = connect();
 	$result = $connect->query($sql);
 	$result->setFetchMode(PDO::FETCH_ASSOC);
-	
+	$search_result = "";
 	while ($array = $result->fetch())
 	{
 		$dir = $array["dir"];
@@ -95,7 +47,7 @@ if($type=="search")
 		unset($face2);
 		if($similarity>=0.9)
 		{
-			echo <<<EOT
+			$search_result .= <<<EOT
 		<a href="http://www.baidu.com"><div class="tile double double-vertical ol-cyan"><img src="{$dir}"><br>similarity: {$similarity}</div></a>
 EOT;
 		}
@@ -117,12 +69,55 @@ EOT;
 */
 	unlink($grayimg);
 	unlink($file_dir);
+	$content = <<<EOT
+	<!-- =========================	Search	========================= -->
+		<div class="text-center">
+			<fieldset>
+			<legend>图片搜索</legend>
+				<form class="form-inline" action="upload_handler.php" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="type" value="search">
+				<div class="">
+				<span class="">选择文件:</span>
+				<input class="" type="file" name="file" id="file">
+				<button type="submit" name="submit" id="submit" class="btn btn-primary">搜索</button>
+				</div>
+				</form>
+			</fieldset>
+		</div>
+				
+	<!-- =========================	Content	========================= -->	
+		<div class="">
+			<fieldset>
+			<legend>搜索结果</legend>
+			{$search_result}
+			</fieldset>
+		</div>
+EOT;
+	$active_page = "index_page";
+	$script = <<<EOT
+			$(".result_a").mouseenter(function()
+			{
+				$(this).children().children(".result_info").css("display","inline");
+			});
+			$(".result_a").mouseleave(function()
+			{
+				$(this).children().children(".result_info").css("display","none");
+			});
+EOT;
+	$style = "";
+	include "template.php";
 }
 else
 {
 	$size = (int)($file["size"]/1024);
-	echo $file["name"]." is uploaded <br> size: ".(int)($file["size"]/1024)."kb<br>";
+	$content = $file["name"]." is uploaded <br> size: ".(int)($file["size"]/1024)."kb<br>";
 	$location = $_POST["location"];
+	$user_name = $_POST['user_name'];
+	$sql = "select user_id from user where name='{$user_name}';";
+	$connect = connect();
+	$result = $connect->query($sql);
+	$result->setFetchMode(PDO::FETCH_ASSOC);
+	$user_id = $result["user_id"];
 	include_once "insert.php";
 }
 
@@ -207,26 +202,8 @@ function selector($face,$features,$type)
 	return $temp;
 }
 
+
 ?>
 
 
-			</fieldset>
-		</div>
-		
-		
-		
-	</div>
-</div>
-    <script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/tile.js"></script>
-	<!--
-	<script>
-	$(document).ready(function()
-	{
-		$("#index_page").attr("class","active");
-	});
-	</script>
-	-->
-</body>
-</html>
+

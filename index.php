@@ -1,37 +1,6 @@
-<?php
-session_start();
-if(!isset($_SESSION['user_name']))
-{
-	$_SESSION['user_name']="findu_anonymous_user";
-}
-?>
-<!DOCTYPE HTML>
-<html>
-<head>
-	<title>Find U</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="css/bootstrap.css" rel="stylesheet">
-	<link href="css/bootstrap-responsive.css" rel="stylesheet">
-	<link href="css/tile.css" rel="stylesheet">
-	<link href="css/findu.css" rel="stylesheet">
-	<style>
+<?php 
 
-
-	</style>
-</head>
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-
-
-	<?php
-	include "navbar.php";
-	include "head.php";
-	?>
-
-<div class="container-fluid">
-	<div class="row-fluid">
-	
-
+$content = <<<EOT
 	
 
 	<!-- =========================	Search	========================= -->
@@ -49,10 +18,10 @@ if(!isset($_SESSION['user_name']))
 			</fieldset>
 		</div>
 		
-	<!-- =========================	Content	========================= -->	
+	<!-- =========================	Result	========================= -->	
 		<div class="">
 			<fieldset>
-			<legend>找找看</legend>
+			<legend>随便找找</legend>
 				<a href="http://www.baidu.com" class="result_a">
 					<div class="tile custom">
 						<img src="img/Taylor/1.jpg" class="result_img">
@@ -64,18 +33,10 @@ if(!isset($_SESSION['user_name']))
 
 			</fieldset>
 		</div>
-		
-		
-		
-	</div>
-</div>
-    <script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/tile.js"></script>
-	<script>
-	$(document).ready(function()
-	{
-		$("#index_page").attr("class","active");
+EOT;
+
+$active_page = "index_page";
+$script = <<<EOT
 		$(".result_a").mouseenter(function()
 		{
 			$(this).children().children(".result_info").css("display","inline");
@@ -84,7 +45,10 @@ if(!isset($_SESSION['user_name']))
 		{
 			$(this).children().children(".result_info").css("display","none");
 		});
-	});
-	</script>
-</body>
-</html>
+EOT;
+$style = "";
+include "template.php";
+?>		
+		
+		
+
