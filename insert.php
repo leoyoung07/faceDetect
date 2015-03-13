@@ -8,7 +8,6 @@ $pic_values = "{$user_id},'{$file_dir}','{$timestamp}','{$location}'";
 
 $sql = "insert into pic({$pic_columns}) values ({$pic_values});";
 
-
 $connect = connect();
 $result = $connect->exec($sql);
 if ($result==true)

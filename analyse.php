@@ -48,7 +48,14 @@ if($type=="search")
 		if($similarity>=0.9)
 		{
 			$search_result .= <<<EOT
-		<a href="http://www.baidu.com"><div class="tile double double-vertical ol-cyan"><img src="{$dir}"><br>similarity: {$similarity}</div></a>
+<a href="http://www.baidu.com" class="result_a">
+	<div class="tile custom">
+		<img src="{$dir}" class="result_img">
+		<div class="result_info" style="background-color:#aaaaaa;position:absolute;left:0;top:0;display:none;">
+			similarity: {$similarity}
+		</div>
+	</div>
+</a>
 EOT;
 		}
 	}
@@ -112,12 +119,13 @@ else
 	$size = (int)($file["size"]/1024);
 	$content = $file["name"]." is uploaded <br> size: ".(int)($file["size"]/1024)."kb<br>";
 	$location = $_POST["location"];
-	$user_name = $_POST['user_name'];
+	$user_name = $_SESSION['user_name'];
 	$sql = "select user_id from user where name='{$user_name}';";
 	$connect = connect();
 	$result = $connect->query($sql);
 	$result->setFetchMode(PDO::FETCH_ASSOC);
-	$user_id = $result["user_id"];
+	$array = $result->fetch();
+	$user_id = $array["user_id"];
 	include_once "insert.php";
 }
 

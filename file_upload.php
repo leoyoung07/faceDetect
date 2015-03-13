@@ -25,8 +25,7 @@ $content = <<<EOT
 			<legend>图片上传</legend>
 				<div class="form-inline offset1">
 				<span class="">选择文件:</span>
-				<input class="" type="file" name="file" id="file">
-				<input class="" type="hidden" name="user_name" id="user_name">				
+				<input class="" type="file" name="file" id="file">		
 				<button type="submit" name="submit" id="submit" class="btn btn-primary ">上传</button>
 				
 				</div>
@@ -39,6 +38,7 @@ $content = <<<EOT
 		</div>
 </form>		
 EOT;
+
 
 $active_page = "file_upload_page";
 $script = "";
