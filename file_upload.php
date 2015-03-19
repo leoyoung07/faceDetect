@@ -3,14 +3,23 @@ include_once "session.php";
 
 include_once "connect.php";
 $connect = connect();
-$sql = "select * from user where name='{$_SESSION["user_name"]}';";
+if($_SESSION["user_name"]=="findu_anonymous_user")
+{
+	$person_name = "匿名";
+	$tel = "无";
+	$email = "无";
+}
+else
+{
+	$sql = "select * from user where name='{$_SESSION["user_name"]}';";
 
-$result = $connect->query($sql);
-$result->setFetchMode(PDO::FETCH_ASSOC);
-$array = $result->fetch();
-$person_name = $array["person_name"];
-$tel = $array["tel"];
-$email = $array["email"];
+	$result = $connect->query($sql);
+	$result->setFetchMode(PDO::FETCH_ASSOC);
+	$array = $result->fetch();
+	$person_name = $array["person_name"];
+	$tel = $array["tel"];
+	$email = $array["email"];
+}
 
 $content = <<<EOT
 <form class="form-horizontal" action="upload_handler.php" method="post" enctype="multipart/form-data">
