@@ -1,19 +1,53 @@
 <?php 
+include_once "session.php";
+
+include_once "connect.php";
+$connect = connect();
+$sql = "select * from user where name='{$_SESSION["user_name"]}';";
+
+$result = $connect->query($sql);
+$result->setFetchMode(PDO::FETCH_ASSOC);
+$array = $result->fetch();
+$person_name = $array["person_name"];
+$tel = $array["tel"];
+$email = $array["email"];
+
 $content = <<<EOT
-<form class="" action="upload_handler.php" method="post" enctype="multipart/form-data">
+<form class="form-horizontal" action="upload_handler.php" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="type" value="upload">
 	<!-- =========================	Information	========================= -->
 		<div class="text-left">
 			<fieldset>
 			<legend>相关信息</legend>
 				
-				<div class="offset1">
+	<div class="control-group">
+		<label class="control-label" for="person_name">姓名: </label>
+		<div class="controls">
+			<p class="lead" id="person_name">{$person_name}</p>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label" for="tel">电话: </label>
+		<div class="controls">
+			<p class="lead" id="tel">{$tel}</p>
+		</div>
+	</div>
 
-				<input class="" type="text"><br>
-				<input class="" type="text"><br>
-				<input class="" type="text"><br>
-				<span class="">位置: </span><input name="location" class="" type="text"><br>
-				</div>
+	<div class="control-group">
+		<label class="control-label" for="email">邮箱: </label>
+		<div class="controls">
+			<p class="lead" id="email">{$email}</p>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="location">拍照地点: </label>
+		<div class="controls">
+			<input name="location" type="text" id="location" value="">
+		</div>
+	</div>	
+
 			</fieldset>
 		</div>		
 	

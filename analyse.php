@@ -1,9 +1,5 @@
 <?php
-session_start();
-if(!isset($_SESSION['user_name']))
-{
-	$_SESSION['user_name']="findu_anonymous_user";
-}
+include_once "session.php";
 
 include_once "connect.php";
 include_once "similarity.php";
