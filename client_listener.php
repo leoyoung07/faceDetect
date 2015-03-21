@@ -76,14 +76,7 @@ else
 				$timestamp = time();
 				$file_dir = "./upload/".$timestamp."-".rand().".jpg";
 				move_uploaded_file($file["tmp_name"],$file_dir);
-				if(trim($_POST["word"])=="1")
-				{
-					echo 1;
-				}
-				else
-				{
-					echo "你好";
-				}
+				echo $_POST["word"];
 				
 				//$size = (int)($file["size"]/1024);
 				//$distance = get_distance($last_longitude,$last_latitude,$longitude,$latitude) * 1000;
