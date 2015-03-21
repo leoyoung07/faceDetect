@@ -53,7 +53,7 @@ $content = <<<EOT
 	<div class="control-group">
 		<label class="control-label" for="location">拍照地点: </label>
 		<div class="controls">
-			<input name="location" type="text" id="location" value="">
+			<input name="location" type="text" id="location" placeholder="请输入拍照地点" value="">
 		</div>
 	</div>	
 

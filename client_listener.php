@@ -2,18 +2,21 @@
 <?php
 include_once "get_distance.php";
 include_once "connect.php";
+$connect = connect();
 if(isset($_POST["action"]))
 {
 	//登陆注册
 	$action = $_POST["action"];
-	$id = $_POST["name"];
+	$name = $_POST["name"];
 	$pw = $_POST["pwd"];
 	$success = array("state"=>1);
 	$fail = array("state"=>0);
 	if($action == "up")
 	{
-		$result = mysql_query("select * from user_info where id='{$id}';",$connect);
-		$array = mysql_fetch_array($result);
+		$sql = "select * from user where name='{$name}';";
+		$result = $connect->query($sql);
+		$result->setFetchMode(PDO::FETCH_ASSOC);
+		$array = $result->fetch();
 		
 		if($array)
 		{
@@ -21,9 +24,9 @@ if(isset($_POST["action"]))
 		}
 		else
 		{
-			
-			$state = mysql_query("insert into user_info(id,password) values('{$id}','{$pw}');",$connect);
-			if($state)
+			$sql = "insert into user(name,password) values('{$name}','{$pw}');";
+			$state = $connect->exec($sql);
+			if($state == true)
 			{
 				echo json_encode($success);
 			}
@@ -35,8 +38,10 @@ if(isset($_POST["action"]))
 	}
 	else
 	{
-		$result = mysql_query("select * from user_info where id='{$id}' and password='{$pw}';",$connect);
-		$array = mysql_fetch_array($result);
+		$sql = "select * from user where name='{$name}' and password='{$pw}';";
+		$result = $connect->query($sql);
+		$result->setFetchMode(PDO::FETCH_ASSOC);
+		$array = $result->fetch();
 		if($array)
 		{
 			echo json_encode($success);
@@ -69,7 +74,7 @@ else
 					mkdir("upload");
 				}
 
-				$file_dir = "./upload/".time().rand().".jpg";
+				$file_dir = "./upload/".$timestamp."-".rand().".jpg";
 				move_uploaded_file($file["tmp_name"],$file_dir);
 				
 				

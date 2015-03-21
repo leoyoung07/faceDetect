@@ -63,21 +63,21 @@ $content = <<<EOT
 	<div class="control-group">
 		<label class="control-label" for="person_name">姓名: </label>
 		<div class="controls">
-			<input name="person_name" type="text" id="person_name" value="{$person_name}">
+			<input name="person_name" type="text" id="person_name" placeholder="请输入姓名" value="{$person_name}">
 		</div>
 	</div>
 
 	<div class="control-group">
 		<label class="control-label" for="tel">电话: </label>
 		<div class="controls">
-			<input name="tel" type="text" id="tel" value="{$tel}">
+			<input name="tel" type="text" id="tel" placeholder="请输入联系电话" value="{$tel}">
 		</div>
 	</div>
 
 	<div class="control-group">
 		<label class="control-label" for="email">邮箱: </label>
 		<div class="controls">
-			<input name="email" type="text" id="email" placeholder="Email" value="{$email}">
+			<input name="email" type="text" id="email" placeholder="请输入邮箱" value="{$email}">
 		</div>
 	</div>	
 

@@ -15,7 +15,7 @@ function connect()
 	// $pw = SAE_MYSQL_PASS;
 	$dsn = 'mysql:dbname='.'findu'.';host='.'localhost'.';port='.'3306';
 	$user = 'root';
-	$pw = '';
+	$pw = '1';
 	try
 	{
 		$connect = new PDO($dsn,$user,$pw);
