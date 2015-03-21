@@ -76,13 +76,13 @@ else
 				$timestamp = time();
 				$file_dir = "./upload/".$timestamp."-".rand().".jpg";
 				move_uploaded_file($file["tmp_name"],$file_dir);
-				if($_POST["word"]=="又")
+				if(trim($_POST["word"])=="1")
 				{
 					echo 1;
 				}
 				else
 				{
-					echo 0;
+					echo "你好";
 				}
 				
 				//$size = (int)($file["size"]/1024);

@@ -40,15 +40,17 @@ if($type=="search")
 		$dir = $array["dir"];
 		$face2 = new face("gray/gray-".basename($dir));
 		$similarity = similarity($face1,$face2);
+
 		unset($face2);
 		if($similarity>=0.9)
 		{
+			$similarity = number_format($similarity*100,2);
 			$search_result .= <<<EOT
 <a href="http://www.baidu.com" class="result_a">
 	<div class="tile custom">
 		<img src="{$dir}" class="result_img">
 		<div class="result_info" style="background-color:#aaaaaa;position:absolute;left:0;top:0;display:none;">
-			similarity: {$similarity}
+			相似度: {$similarity}%
 		</div>
 	</div>
 </a>
