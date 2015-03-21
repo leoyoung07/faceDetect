@@ -1,24 +1,24 @@
 <?php 
 include_once "connect.php";
-$sql = "select top 9 from pic order by timestamp desc;";
+$sql = "select * from pic order by timestamp desc limit 9;";
 $connect = connect();
 $result = $connect->query($sql);
-// $result->setFetchMode(PDO::FETCH_ASSOC);
- $search_result = "";
-// while ($array = $result->fetch())
-// {
-	// $dir = $array["dir"];
-	// $search_result .= <<<EOT
-// <a href="http://www.baidu.com" class="result_a">
-	// <div class="tile custom">
-		// <img src="{$dir}" class="result_img">
-		// <div class="result_info" style="background-color:#aaaaaa;position:absolute;left:0;top:0;display:none;">
-			// time: {$array["timestamp"]}
-		// </div>
-	// </div>
-// </a>
-// EOT;
-//}
+$result->setFetchMode(PDO::FETCH_ASSOC);
+$search_result = "";
+while ($array = $result->fetch())
+{
+	$dir = $array["dir"];
+	$search_result .= <<<EOT
+<a href="detail.php?dir={$dir}" class="result_a">
+	<div class="tile custom">
+		<img src="{$dir}" class="result_img">
+		<div class="result_info" style="background-color:#aaaaaa;position:absolute;left:0;top:0;display:none;">
+			time: {$array["timestamp"]}
+		</div>
+	</div>
+</a>
+EOT;
+}
 
 $content = <<<EOT
 	

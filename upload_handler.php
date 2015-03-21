@@ -16,6 +16,7 @@ if($check_file)
 		{
 			mkdir("upload");
 		}
+		date_default_timezone_set("Asia/Shanghai"); 
 		$timestamp = time();
 		$file_dir = "./upload/".$timestamp."-".rand().".jpg";
 		move_uploaded_file($file["tmp_name"],$file_dir);
