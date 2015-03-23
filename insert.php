@@ -12,12 +12,22 @@ $connect = connect();
 $result = $connect->exec($sql);
 if ($result==true)
 {
-	echo "sql successed<br>";
+	//echo "sql successed<br>";
+	echo <<<EOT
+	<meta http-equiv="refresh" content="0;url=file_upload.php">
+	<meta charset="utf-8">
+	<script>alert('上传成功')</script>
+EOT;
 	
 }	
 else
 {
-	echo "sql failed<br>";
+	//echo "sql failed<br>";
+	echo <<<EOT
+	<meta http-equiv="refresh" content="0;url=file_upload.php">
+	<meta charset="utf-8">
+	<script>alert('上传失败,请重试')</script>
+EOT;
 }
 
 

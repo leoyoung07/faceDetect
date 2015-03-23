@@ -8,12 +8,14 @@ $search_result = "";
 while ($array = $result->fetch())
 {
 	$dir = $array["dir"];
+	$timestamp = $array["timestamp"];
+	$date = date("Y年m月d日 H点i分",$timestamp);
 	$search_result .= <<<EOT
 <a href="detail.php?dir={$dir}" class="result_a">
 	<div class="tile custom">
 		<img src="{$dir}" class="result_img">
 		<div class="result_info" style="background-color:#aaaaaa;position:absolute;left:0;top:0;display:none;">
-			time: {$array["timestamp"]}
+			上传时间: {$date}
 		</div>
 	</div>
 </a>
@@ -32,6 +34,11 @@ $content = <<<EOT
 				<div class="">
 				<span class="">选择文件:</span>
 				<input class="" type="file" name="file" id="file">
+				<div class="input-prepend input-append">
+		          <span class="add-on">相似度</span>
+		          <input class="span2" id="similarity" name="similarity" type="text" value="90">
+		          <span class="add-on">%</span>
+		        </div>			
 				<button type="submit" name="submit" id="submit" class="btn btn-primary">搜索</button>
 				</div>
 				</form>

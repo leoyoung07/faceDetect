@@ -15,7 +15,6 @@ exit();
 
 include_once "connect.php";
 $connect = connect();
-$script = "";
 
 if(isset($_POST["changed"]))
 {
@@ -44,6 +43,8 @@ $array = $result->fetch();
 $person_name = $array["person_name"];
 $tel = $array["tel"];
 $email = $array["email"];
+$user_id = $array["user_id"];
+
 
 $content = <<<EOT
 	<!-- =========================	User Info	========================= -->	
@@ -89,10 +90,52 @@ $content = <<<EOT
 </form>
 </form>
 			</fieldset>
+			
+		</div>
+EOT;
+
+$sql = "select * from pic where user_id={$user_id};";
+$result = $connect->query($sql);
+$result->setFetchMode(PDO::FETCH_ASSOC);
+$search_result = "";
+while ($array = $result->fetch())
+{
+	$dir = $array["dir"];
+	$timestamp = $array["timestamp"];
+	$date = date("Y年m月d日 H点i分",$timestamp);
+	$search_result .= <<<EOT
+<a href="detail.php?dir={$dir}" class="result_a">
+	<div class="tile custom">
+		<img src="{$dir}" class="result_img">
+		<div class="result_info" style="background-color:#aaaaaa;position:absolute;left:0;top:0;display:none;">
+			上传时间: {$date}
+		</div>
+	</div>
+</a>
+EOT;
+}
+
+$content .= <<<EOT
+	<!-- =========================	Record	========================= -->	
+		<div class="">
+			<fieldset>
+			<legend>上传记录</legend>
+				{$search_result}
+			</fieldset>
 		</div>
 EOT;
 $active_page = "user_info_page";
 $style = "";
+$script = <<<EOT
+		$(".result_a").mouseenter(function()
+		{
+			$(this).children().children(".result_info").css("display","inline");
+		});
+		$(".result_a").mouseleave(function()
+		{
+			$(this).children().children(".result_info").css("display","none");
+		});
+EOT;
 include "template.php";
 
 ?>

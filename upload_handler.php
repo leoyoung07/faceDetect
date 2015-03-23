@@ -50,7 +50,12 @@ EOT;
 }
 else
 {
-	echo "invalid file!";
+	echo <<<EOT
+	<meta http-equiv="refresh" content="0;url=index.php">
+	<meta charset="utf-8">
+	<script>alert('文件类型无效')</script>
+EOT;
+	exit();
 }
 
 

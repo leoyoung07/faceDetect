@@ -6,6 +6,16 @@ include_once "similarity.php";
 include_once "face_class.php";
 include_once "xml.php";
 include_once "gray.php";
+$similarity_req = (int)$_POST["similarity"];
+if($similarity_req>100||$similarity_req<0)
+{
+	echo <<<EOT
+	<meta http-equiv="refresh" content="0;url=index.php">
+	<meta charset="utf-8">
+	<script>alert('请输入有效的相似度')</script>
+EOT;
+	exit();
+}
 $features = array("face","right_eye","left_eye","nose","mouth");
 $loc = array("x","y","w","h");
 $detect_result = array();
@@ -35,16 +45,16 @@ if($type=="search")
 	$result = $connect->query($sql);
 	$result->setFetchMode(PDO::FETCH_ASSOC);
 	$search_result = "";
+
 	while ($array = $result->fetch())
 	{
 		$dir = $array["dir"];
 		$face2 = new face("gray/gray-".basename($dir));
 		$similarity = similarity($face1,$face2);
-
+		$similarity = number_format($similarity*100,2);
 		unset($face2);
-		if($similarity>=0.9)
+		if((int)$similarity>=$similarity_req)
 		{
-			$similarity = number_format($similarity*100,2);
 			$search_result .= <<<EOT
 <a href="http://www.baidu.com" class="result_a">
 	<div class="tile custom">
@@ -84,6 +94,11 @@ EOT;
 				<div class="">
 				<span class="">选择文件:</span>
 				<input class="" type="file" name="file" id="file">
+				<div class="input-prepend input-append">
+		          <span class="add-on">相似度</span>
+		          <input class="span2" id="similarity" name="similarity" type="text" value="90">
+		          <span class="add-on">%</span>
+		        </div>	
 				<button type="submit" name="submit" id="submit" class="btn btn-primary">搜索</button>
 				</div>
 				</form>
