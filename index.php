@@ -26,9 +26,10 @@ $content = <<<EOT
 	
 
 	<!-- =========================	Search	========================= -->
-		<div class="text-center">
-			<fieldset>
-			<legend>图片搜索</legend>
+
+		<fieldset>
+		<legend>图片搜索</legend>
+			<div class="text-center">
 				<form class="form-inline" action="upload_handler.php" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="type" value="search">
 				<div class="">
@@ -42,8 +43,9 @@ $content = <<<EOT
 				<button type="submit" name="submit" id="submit" class="btn btn-primary">搜索</button>
 				</div>
 				</form>
-			</fieldset>
-		</div>
+			</div>
+		</fieldset>
+
 		
 	<!-- =========================	Result	========================= -->	
 		<div class="">

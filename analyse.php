@@ -86,9 +86,10 @@ EOT;
 	unlink($file_dir);
 	$content = <<<EOT
 	<!-- =========================	Search	========================= -->
-		<div class="text-center">
-			<fieldset>
-			<legend>图片搜索</legend>
+
+		<fieldset>
+		<legend>图片搜索</legend>
+			<div class="text-center">
 				<form class="form-inline" action="upload_handler.php" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="type" value="search">
 				<div class="">
@@ -98,12 +99,12 @@ EOT;
 		          <span class="add-on">相似度</span>
 		          <input class="span2" id="similarity" name="similarity" type="text" value="90">
 		          <span class="add-on">%</span>
-		        </div>	
+		        </div>			
 				<button type="submit" name="submit" id="submit" class="btn btn-primary">搜索</button>
 				</div>
 				</form>
-			</fieldset>
-		</div>
+			</div>
+		</fieldset>
 				
 	<!-- =========================	Content	========================= -->	
 		<div class="">
