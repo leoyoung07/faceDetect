@@ -76,8 +76,114 @@ else
 				$timestamp = time();
 				$file_dir = "./upload/".$timestamp."-".rand().".jpg";
 				move_uploaded_file($file["tmp_name"],$file_dir);
-				echo $_POST["word"];
 				
+				
+				
+				$longitude = "";
+				$latitude = "";
+
+				$last_longitude = 121.52245;
+				$last_latitude = 38.87985;
+
+				$longitude = (double)$_POST["longitude"];
+				$latitude = (double)$_POST["latitude"];
+				if($_POST["tag"] == "search")
+				{
+				
+
+					include_once "similarity.php";
+					include_once "face_class.php";
+					include_once "xml.php";
+					include_once "gray.php";
+					function choose_max($features)
+					{
+						$result = array();
+						$max = 0;
+						for ($i = 0; $i < count($features); $i++)
+						{
+							if ($features[$i]["w"]*$features[$i]["h"]>$max)
+							{
+								$max = $features[$i]["w"]*$features[$i]["h"];
+								$result = $features[$i];
+							}
+							
+						}
+						return $result;
+						
+					}
+					// $features = array("face","right_eye","left_eye","nose","mouth");
+					// $loc = array("x","y","w","h");
+					$detect_result = array();
+					$detect_result[0] = choose_max(face_detect($file_dir, $xml[0]));
+					$grayimg = "gray/gray-".basename($file_dir);
+					grayjpg($file_dir, $grayimg,$detect_result[0]["x"],$detect_result[0]["y"], $detect_result[0]["w"],$detect_result[0]["h"]);
+					$face1 = new face($grayimg);
+					$sql = "select name,dir,location from user natural join pic;";
+					$connect = connect();
+					$result = $connect->query($sql);
+					$result->setFetchMode(PDO::FETCH_ASSOC);
+					$search_result = "";
+
+					while ($array = $result->fetch())
+					{
+						$dir = $array["dir"];
+						$face2 = new face("gray/gray-".basename($dir));
+						$similarity = similarity($face1,$face2);
+						$similarity = number_format($similarity*100,2);
+						unset($face2);
+						if((int)$similarity>=90)
+						{
+							break;
+						}
+					}
+
+					unlink($grayimg);
+					unlink($file_dir);
+					$last_longitude = split(";",$array["location"])[1];
+					$last_longitude = (double)$last_longitude;
+					$last_latitude = split(";",$array["location"])[2];
+					$last_latitude = (double)$last_longitude;
+					$distance = get_distance($last_longitude,$last_latitude,$longitude,$latitude) * 1000;
+					$content = "距离:".$distance."m,".split(";",$array["location"])[3];;
+					$urlf="http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+					$po= strripos($urlf,'/');
+					$url = substr($urlf,0,$po+1).$dir;
+					$name = "leo";
+					$result = array("name"=>$name, "url" => $url, "content"=>$content);
+					echo json_encode($result);
+					}
+				else
+				{
+					$size = (int)($file["size"]/1024);
+					$content = $file["name"]." is uploaded.";
+					$location = ";".$_POST["longitude"].";".$_POST["latitude"].";";
+					$user_name = $_POST["name"];
+					$sql = "select user_id from user where name='{$user_name}';";
+					$connect = connect();
+					$result = $connect->query($sql);
+					$result->setFetchMode(PDO::FETCH_ASSOC);
+					$array = $result->fetch();
+					$user_id = $array["user_id"];
+					$pic_columns = "user_id,dir,timestamp,location";
+					$pic_values = "{$user_id},'{$file_dir}','{$timestamp}','{$location}'";
+
+					$sql = "insert into pic({$pic_columns}) values ({$pic_values});";
+
+
+					$result = $connect->exec($sql);
+					if ($result==true)
+					{
+						//echo "sql successed<br>";
+						$success = array("result"=>$content);
+						echo json_encode($success);
+						
+					}	
+					else
+					{
+						//echo "sql failed<br>";
+
+					}
+				}
 				//$size = (int)($file["size"]/1024);
 				//$distance = get_distance($last_longitude,$last_latitude,$longitude,$latitude) * 1000;
 				//echo $file["name"]." is uploaded \n size: ".(int)($file["size"]/1024)."kb\nlongitude:{$longitude}\nlatitude:{$latitude}\ndistance:{$distance}m";
@@ -91,17 +197,47 @@ else
 	}
 	else
 	{
-		//经纬度测距
-		$longitude = "";
-		$latitude = "";
+			//经纬度测距
+			$longitude = "";
+			$latitude = "";
 
-		$last_longitude = 121.52245;
-		$last_latitude = 38.87985;
+			$last_longitude = 121.52245;
+			$last_latitude = 38.87985;
+			$sql = "select name,dir,location from user natural join pic;";
+			$connect = connect();
+			$result = $connect->query($sql);
+			$result->setFetchMode(PDO::FETCH_ASSOC);
+			$longitude = (double)$_POST["longitude"];
+			$latitude = (double)$_POST["latitude"];			
+			while($array = $result->fetch())
+			{
+				$last_longitude = split(";",$array["location"])[1];
+				$last_longitude = (double)$last_longitude;
+				$last_latitude = split(";",$array["location"])[2];
+				$last_latitude = (double)$last_longitude;
+				
+				$distance = get_distance($last_longitude,$last_latitude,$longitude,$latitude) * 1000;
 
-		$longitude = (double)$_POST["longitude"];
-		$latitude = (double)$_POST["latitude"];
-		$distance = get_distance($last_longitude,$last_latitude,$longitude,$latitude) * 1000;
-		echo "longitude:{$longitude}\nlatitude:{$latitude}\ndistance:{$distance}m";
+				if($distance<=2000)
+				{
+					$name = $array["name"];
+					$content = split(";",$array["location"])[3];
+					$urlf="http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+					$po= strripos($urlf,'/');
+					$url = substr($urlf,0,$po+1).$array["dir"];
+					$result = array("name"=>$name, "url" => $url, "content"=>$content);
+					echo json_encode($result);
+					break;
+					// $file = "test.txt";
+					// $data = json_encode($result);
+
+					// $f = fopen($file,"w");
+					// fwrite($f,$data);
+					// fclose($f);
+						
+				}
+			}
+//		}
 	}
 }
 
