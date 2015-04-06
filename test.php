@@ -39,10 +39,9 @@ function face_compare($file,$dr1,$loc){
 <body>
 <form action="client_listener.php" method="post">
 <input type="text" name="name" placeholder="name"><br>
-<input type="text" name="pwd" placeholder="pwd"><br>
-<input type="text" name="email" placeholder="email"><br>
-<input type="text" name="action" placeholder="action"><br>
-<input type="submit" value="测试">
+<input type="text" name="longitude" placeholder="longitude"><br>
+<input type="text" name="latitude" placeholder="latitude"><br>
+<input type="submit" value="submit">
 </form>
 </body>
 </html>
