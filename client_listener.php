@@ -81,42 +81,38 @@ else
 				
 				$longitude = "";
 				$latitude = "";
-
-				$last_longitude = 121.52245;
-				$last_latitude = 38.87985;
-
-				$longitude = (double)$_POST["longitude"];
-				$latitude = (double)$_POST["latitude"];
+				include_once "similarity.php";
+				include_once "face_class.php";
+				include_once "xml.php";
+				include_once "gray.php";
+				function choose_max($features)
+				{
+					$result = array();
+					$max = 0;
+					for ($i = 0; $i < count($features); $i++)
+					{
+						if ($features[$i]["w"]*$features[$i]["h"]>$max)
+						{
+							$max = $features[$i]["w"]*$features[$i]["h"];
+							$result = $features[$i];
+						}
+						
+					}
+					return $result;
+					
+				}
+				// $features = array("face","right_eye","left_eye","nose","mouth");
+				// $loc = array("x","y","w","h");
+				$detect_result = array();
+				$detect_result[0] = choose_max(face_detect($file_dir, $xml[0]));
+				$grayimg = "gray/gray-".basename($file_dir);
+				grayjpg($file_dir, $grayimg,$detect_result[0]["x"],$detect_result[0]["y"], $detect_result[0]["w"],$detect_result[0]["h"]);
 				if($_POST["tag"] == "search")
 				{
 				
 
-					include_once "similarity.php";
-					include_once "face_class.php";
-					include_once "xml.php";
-					include_once "gray.php";
-					function choose_max($features)
-					{
-						$result = array();
-						$max = 0;
-						for ($i = 0; $i < count($features); $i++)
-						{
-							if ($features[$i]["w"]*$features[$i]["h"]>$max)
-							{
-								$max = $features[$i]["w"]*$features[$i]["h"];
-								$result = $features[$i];
-							}
-							
-						}
-						return $result;
-						
-					}
-					// $features = array("face","right_eye","left_eye","nose","mouth");
-					// $loc = array("x","y","w","h");
-					$detect_result = array();
-					$detect_result[0] = choose_max(face_detect($file_dir, $xml[0]));
-					$grayimg = "gray/gray-".basename($file_dir);
-					grayjpg($file_dir, $grayimg,$detect_result[0]["x"],$detect_result[0]["y"], $detect_result[0]["w"],$detect_result[0]["h"]);
+
+
 					$face1 = new face($grayimg);
 					$sql = "select name,dir,location from user natural join pic;";
 					$connect = connect();
@@ -148,7 +144,7 @@ else
 					$urlf="http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 					$po= strripos($urlf,'/');
 					$url = substr($urlf,0,$po+1).$dir;
-					$name = "leo";
+					$name = $array["name"];
 					$result = array("name"=>$name, "url" => $url, "content"=>$content);
 					echo json_encode($result);
 				}
@@ -201,8 +197,6 @@ else
 			$longitude = "";
 			$latitude = "";
 
-			$last_longitude = 121.52245;
-			$last_latitude = 38.87985;
 			$sql = "select name,dir,location from user natural join pic;";
 			$connect = connect();
 			$result = $connect->query($sql);
@@ -217,16 +211,11 @@ else
 				$last_latitude = (double)$last_longitude;
 				
 				$distance = get_distance($last_longitude,$last_latitude,$longitude,$latitude) * 1000;
-					 $file = "test.txt";
-					 $data = "".$distance."";
 
-					 $f = fopen($file,"w");
-					 fwrite($f,$data);
-					 fclose($f);
-				if($distance<=20000)
+				if($distance<=2000)
 				{
 					$name = $array["name"];
-					$content = split("lo",$array["location"])[3];
+					$content = "距离:".$distance."m,".split("lo",$array["location"])[3];
 					$urlf="http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 					$po= strripos($urlf,'/');
 					$url = substr($urlf,0,$po+1)."upload/".basename($array["dir"]);
