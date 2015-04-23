@@ -33,10 +33,10 @@ if($type=="search")
 	if($similarity_req>100||$similarity_req<0)
 	{
 		echo <<<EOT
-		<meta http-equiv="refresh" content="0;url=index.php">
-		<meta charset="utf-8">
-		<script>alert('请输入有效的相似度')</script>
-	EOT;
+<meta http-equiv="refresh" content="0;url=index.php">
+<meta charset="utf-8">
+<script>alert('请输入有效的相似度')</script>
+EOT;
 		exit();
 	}
 	$face1 = new face($grayimg);
