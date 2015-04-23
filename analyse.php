@@ -6,16 +6,7 @@ include_once "similarity.php";
 include_once "face_class.php";
 include_once "xml.php";
 include_once "gray.php";
-$similarity_req = (int)$_POST["similarity"];
-if($similarity_req>100||$similarity_req<0)
-{
-	echo <<<EOT
-	<meta http-equiv="refresh" content="0;url=index.php">
-	<meta charset="utf-8">
-	<script>alert('请输入有效的相似度')</script>
-EOT;
-	exit();
-}
+
 $features = array("face","right_eye","left_eye","nose","mouth");
 $loc = array("x","y","w","h");
 $detect_result = array();
@@ -38,7 +29,16 @@ $type = $_POST["type"];
 
 if($type=="search")
 {
-
+	$similarity_req = (int)$_POST["similarity"];
+	if($similarity_req>100||$similarity_req<0)
+	{
+		echo <<<EOT
+		<meta http-equiv="refresh" content="0;url=index.php">
+		<meta charset="utf-8">
+		<script>alert('请输入有效的相似度')</script>
+	EOT;
+		exit();
+	}
 	$face1 = new face($grayimg);
 	$sql = "select * from pic;";
 	$connect = connect();
@@ -56,7 +56,7 @@ if($type=="search")
 		if((int)$similarity>=$similarity_req)
 		{
 			$search_result .= <<<EOT
-<a href="http://www.baidu.com" class="result_a">
+<a href="detail.php?dir={$dir}" class="result_a">
 	<div class="tile custom">
 		<img src="{$dir}" class="result_img">
 		<div class="result_info" style="background-color:#aaaaaa;position:absolute;left:0;top:0;display:none;">
